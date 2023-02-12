@@ -13,6 +13,11 @@ This project will sort of serve as a catch-all for different urban-related analy
     Census analyses
     Voting / elections
 
-I plan to either store data I use either here in GitHub or in Google Big Query. Once I figure that out, I'll post a link where you can access the data and run your own analyses.
+I plan to either store data I use either here in GitHub or in Google Cloud. Once I figure that out, I'll post a link where you can access the data and run your own analyses.
 
 If anyone is interested in collaborating on a specific project, drop me a toot over at Mastodon - @jackturek708@urbanists.social
+
+# Data Legend
+| Name | Purpose | API | Link | 
+| ---- | ------- | --- | ---- | 
+| City meeting agendas | City council session agendas, committee meeting agends, and more. PDF and HTML | No | [SA Primegov](https://sanantonio.primegov.com/public/portal?fromiframe=1) | 

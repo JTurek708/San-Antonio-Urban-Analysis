@@ -17,7 +17,9 @@ I plan to either store data I use either here in GitHub or in Google Cloud. Once
 
 If anyone is interested in collaborating on a specific project, drop me a toot over at Mastodon - @jackturek708@urbanists.social
 
-# Data Legend
+# Helpful data links
 | Name | Purpose | API | Link | 
 | ---- | ------- | --- | ---- | 
 | City meeting agendas | City council session agendas, committee meeting agends, and more. PDF and HTML | No | [SA Primegov](https://sanantonio.primegov.com/public/portal?fromiframe=1) | 
+| City council minutes | City council meeting minutes. Each date/ meeting is it's own link to HTML with embedded PDF. | No | [Office of City Clerk](https://www.sanantonio.gov/Clerk/Legislative/City-Council-Agendas-Minutes#132762778-meeting-minutes) | 
+| Texas bill vote information | Instructional page only. | No | [Texas Legislature Online](https://capitol.texas.gov/Help/findvoteinfo.aspx) | 

@@ -1,4 +1,5 @@
 import logging
+import json
 import requests
 import os
 from bs4 import BeautifulSoup
@@ -9,8 +10,8 @@ from bs4 import BeautifulSoup
 """
 
 def main(): 
-    #logging.basicConfig(level=logging.INFO)
-    logging.basicConfig(level=logging.DEBUG)
+    #logging.basicConfig(filename='app.log',level=logging.INFO)
+    logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s -- %(levelname)s: %(message)s')
 
     
     # If we don't have the landing page, scrape the landing page and output file
@@ -21,7 +22,7 @@ def main():
         meeting_minute_hrefs = parse_hrefs('landing.html')
     
     #print(meeting_minute_hrefs[0])
-    get_meeting_minutes(meeting_minute_hrefs)
+    #get_meeting_minutes(meeting_minute_hrefs)
     
     
 def check_contents_dir(web_pg):
@@ -90,40 +91,54 @@ def parse_hrefs(html_file):
     logging.debug(f'Searching hrefs found for city meeting minutes...')
 
     # since we only care about hrefs (links) with city minutes, we'll dump those to a separate list
-    meeting_minutes_hrefs = []
     href_dict = {}
+    soup_len = len(soup.select('.ccMeetingMinutes a'))
+    i = 0
 
     for a in soup.select('.ccMeetingMinutes a'):
-        print(a)
-        #print(a['title'])
-        #href_dict[title] = a['href']
-        #meeting_minutes_hrefs.append(a['href'])
-        #logging.debug(a['href'], a.get_text(strip=True))
+        if i >= soup_len:
+            break
+        elif a.getText('title'):
+            href_dict[a.getText('title')] = a.attrs
+        else: 
+            href_dict[i] = a.attrs
+        i += 1
               
-    """
-    for href in href_list:
-        if '/Portals/0/Files/Clerk/Minutes' in href:
-            meeting_minutes_hrefs.append(href)
-    """
-    print(href_dict)
-    logging.debug(f'Found {len(meeting_minutes_hrefs)} hrefs pointing to /Portals/0/Files/Clerk/Minutes within {html_file}')
+    logging.debug(f'Found {len(href_dict)} hrefs within the ccMeetingMinutes div classes in {html_file}')
 
+    # if contents folder does not exist, no html files have been scraped yet
+    os.chdir('..')
+    if 'data' not in os.listdir(os.getcwd()):
+        os.mkdir('data')
+        data_folder = os.path.join(os.getcwd(), 'data')
+        os.chdir(data_folder)
+        logging.info('Created /data directory')
+        logging.debug(f'Changed directory. Current working directory is {os.getcwd()}')
+    else:
+        data_folder = os.path.join(os.getcwd(), 'data')
+        os.chdir(data_folder)
+        logging.debug(f'Changed directory. Current working directory is {os.getcwd()}')
+        logging.debug(f'Files in contents directory are {os.listdir()}')
+
+    with open("meetingMinutes.json", "w") as outfile:
+        json.dump(href_dict, outfile, indent=4)
 
     return meeting_minutes_hrefs
+
 
 def get_meeting_minutes(meeting_minute_hrefs):
     #logging.debug(f'Getting {meeting_minute_hrefs[0]}...')
     url = meeting_minute_hrefs[0]
 
-    response = requests.get(url)
+    #response = requests.get(url)
 
-    soup = BeautifulSoup(response.text, 'html.parser')
-    print(soup)
+    #soup = BeautifulSoup(response.text, 'html.parser')
+    #print(soup)
 
     #output_contents(soup, )
 
 
-    return soup
+    #return soup
 
 
  

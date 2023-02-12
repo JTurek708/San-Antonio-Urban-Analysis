@@ -1,4 +1,4 @@
-# San-Antonio-Urban-Analysis
+# San Antonio Urban Analysis
 
 San Antonio, TX is the 7th largest city in the United States and often billed as one of the fastest growing cities in Texas and the country. With a rapidly growing population, San Antonio is under pressure to provide adequate services to new residents while also improving services to existing residents, especially those in poor areas of the city. San Antonio has the highest poverty rate of all large US metros, as well.
 

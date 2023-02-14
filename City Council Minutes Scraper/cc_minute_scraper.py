@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 """
 
 def main(): 
-    #logging.basicConfig(filename='app.log',level=logging.INFO)
+    #logging.basicConfig(filename='app.log',level=logging.INFO, format='%(asctime)s -- %(levelname)s: %(message)s')
     logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s -- %(levelname)s: %(message)s')
 
     
@@ -21,8 +21,7 @@ def main():
     else:
         meeting_minute_hrefs = parse_hrefs('landing.html')
     
-    #print(meeting_minute_hrefs[0])
-    #get_meeting_minutes(meeting_minute_hrefs)
+    dump_data(meeting_minute_hrefs)
     
     
 def check_contents_dir(web_pg):
@@ -57,7 +56,6 @@ def get_landing_page():
     meeting_min_url = 'https://www.sanantonio.gov/Clerk/Legislative/City-Council-Agendas-Minutes#132762778-meeting-minutes'
 
     response = requests.get(meeting_min_url)
-
     soup = BeautifulSoup(response.text, 'html.parser')
 
     return soup
@@ -84,6 +82,7 @@ def parse_hrefs(html_file):
         contents = f.read()
         soup = BeautifulSoup(contents, 'html.parser')
 
+        # all hrefs 
         for a in soup.find_all('a', href=True):
             href_list.append(a['href'])
     
@@ -96,6 +95,7 @@ def parse_hrefs(html_file):
     i = 0
 
     for a in soup.select('.ccMeetingMinutes a'):
+        print(type(a))
         if i >= soup_len:
             break
         elif a.getText('title'):
@@ -106,7 +106,10 @@ def parse_hrefs(html_file):
               
     logging.debug(f'Found {len(href_dict)} hrefs within the ccMeetingMinutes div classes in {html_file}')
 
-    # if contents folder does not exist, no html files have been scraped yet
+    return href_dict
+
+
+def dump_data(href_dict):
     os.chdir('..')
     if 'data' not in os.listdir(os.getcwd()):
         os.mkdir('data')
@@ -123,8 +126,7 @@ def parse_hrefs(html_file):
     with open("meetingMinutes.json", "w") as outfile:
         json.dump(href_dict, outfile, indent=4)
 
-    return meeting_minutes_hrefs
-
+    print('exit dump data...')
 
 def get_meeting_minutes(meeting_minute_hrefs):
     #logging.debug(f'Getting {meeting_minute_hrefs[0]}...')

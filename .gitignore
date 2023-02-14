@@ -2,3 +2,4 @@
 pyvenv.cfg
 scratch.py
 app.log
+Dockerfile

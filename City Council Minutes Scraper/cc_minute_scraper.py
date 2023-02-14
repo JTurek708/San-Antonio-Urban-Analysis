@@ -7,6 +7,13 @@ from bs4 import BeautifulSoup
 """
     Work in progress. Not running yet. 
     Definition of Done: Scraper can pull city meeting minutes and parse out voting roll call
+
+    TODO: 
+       a. Need to figure out how to get 2018 meeting minutes and older... 
+       b. Add functionality to pull/ download meeting minute PDFs
+       c. Decide if we will create a separate script to parse the meeting minutes 
+       d. Implement decision c.
+       e. Fix Dockerfile? 
 """
 
 def main(): 
@@ -18,8 +25,8 @@ def main():
     if check_contents_dir('landing.html') == False:
         soup = get_landing_page()
         output_contents(soup, 'landing.html')
-    else:
-        meeting_minute_hrefs = parse_hrefs('landing.html')
+    
+    meeting_minute_hrefs = parse_hrefs('landing.html')
     
     dump_data(meeting_minute_hrefs)
     
@@ -82,9 +89,9 @@ def parse_hrefs(html_file):
         contents = f.read()
         soup = BeautifulSoup(contents, 'html.parser')
 
-        # all hrefs 
-        for a in soup.find_all('a', href=True):
-            href_list.append(a['href'])
+    # all hrefs 
+    for a in soup.find_all('a', href=True):
+        href_list.append(a['href'])
     
     logging.debug(f'Found {len(href_list)} total hrefs in {html_file}')
     logging.debug(f'Searching hrefs found for city meeting minutes...')
@@ -95,7 +102,6 @@ def parse_hrefs(html_file):
     i = 0
 
     for a in soup.select('.ccMeetingMinutes a'):
-        print(type(a))
         if i >= soup_len:
             break
         elif a.getText('title'):
@@ -126,7 +132,6 @@ def dump_data(href_dict):
     with open("meetingMinutes.json", "w") as outfile:
         json.dump(href_dict, outfile, indent=4)
 
-    print('exit dump data...')
 
 def get_meeting_minutes(meeting_minute_hrefs):
     #logging.debug(f'Getting {meeting_minute_hrefs[0]}...')

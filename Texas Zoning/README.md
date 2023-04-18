@@ -8,3 +8,9 @@ I also plan to look at how median rents, median home sale price, and other urban
 
 ## Austin, Texas
 - Residential permits issued data too large for GH, will be hosted elsewhere. Will post link when available.
+
+## Houston, Texas
+- 502 Bad Gateway on their Open Data Portal SMH
+
+## Dallas, Texas
+- Building permits data. Contains land-use at associated site. Too large for GH, will be hosted elsewhere. Will post link when available.

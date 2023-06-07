@@ -1,0 +1,2 @@
+# San Antonio Opportunity Zones
+San Antonio has 24 census tracts designated as Opportunity Zones by the Tax Cuts & Jobs Act of 2017. These tracts were selected by the governor and are designated as economically distressed and marginalized neighborhoods. The TC&JA created Opportunity Zones in an effort to spur private investment in these communities. Data is still coming in about the effects of this policy.
